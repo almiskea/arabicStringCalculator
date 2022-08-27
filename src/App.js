@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function App() {
   // Declare a new state variable, which we'll call "count"
   // const structureCalc = 
-
+  
   const baseCalculationObj = {
     name:'',
     letters:{
@@ -132,6 +132,38 @@ function App() {
         'غ':263,
         ' ':0}
     },
+    "البسط العددي الصغير":{
+      letters:{
+        'ء':19,'ا':19,'أ':19,'ئ':19,'ى':19,
+        'ب':602,
+        'ج':1431,
+        'د':673,
+        'ه':1100,
+        'ؤ':860 ,'و':860,
+        'ز':532,
+        'ح':1001,
+        'ط':930,
+        'ي':970,
+        'ك':626,
+        'ل':1087,
+        'م':329,
+        'ن':756,
+        'س':516,
+        'ع':188,
+        'ف':647,
+        'ص':586,
+        'ق':450,
+        'ر':510,
+        'ش':1481,
+        'ة':723,'ت':723,
+        'ث':1150,
+        'خ':910,
+        'ذ':582,
+        'ض':1041,
+        'ظ':980,
+        'غ':111,
+        ' ':0}
+    },
     "حساب أبجد الكبير":{
       letters:{
         'ء':1,'ا':1,'أ':1,'ئ':1,'ى':1,
@@ -194,7 +226,7 @@ function App() {
   'خ','د','ذ','ر','ز','س','ش','ص','ض','ط',
   'ظ','ع','غ','ف','ق','ك','ل','م','ن','ه','و','ي']
 
-  const letterValueTable = method != '' ? <div  className='w3-row' > {
+  const letterValueTable = method != '' ? (<div  className='w3-row' > {
     Object.keys(letterValues).map((name) => { 
       const {letters} = letterValues[name];
       if(name == method){
@@ -206,7 +238,7 @@ function App() {
     })
       
       }
-      </div> : ''
+      </div>) : ''
 
   function calcWord(m){
     let val = 0;
@@ -224,7 +256,8 @@ function App() {
                   return  <div className="w3-col m2 w3-light-grey w3-center w3-border" key={arabicLetter} style={{"width":"70px"}}>
                             <label>{arabicLetter}</label>
                             <input className="w3-input w3-border" value={newCalcObj.letters[arabicLetter]} onChange={(event) => {
-                                        let updatedValue = structuredClone(newCalcObj);
+                                        let updatedValue = JSON.parse(JSON.stringify(newCalcObj))
+                                        
                                         updatedValue.letters[arabicLetter] = event.target.value;
                                         setNewCalcObj(updatedValue);
                             }} type="text" placeholder={newCalcObj.letters[arabicLetter]}/>
@@ -233,15 +266,15 @@ function App() {
                         }
                         <input className='w3-input w3-border' value={newCalcName} type="text" placeholder='اسم الحساب الجديد' 
                         onChange={(event) => {
-                          let updatedValue = structuredClone(newCalcObj);
+                          let updatedValue = JSON.parse(JSON.stringify(newCalcObj))
                           updatedValue.name = event.target.value;
                           setNewCalcObj(updatedValue);
                           setNewCalcName(event.target.value)}
                           }/>
       <button  onClick={() =>{
-        let updatedValue = structuredClone(letterValues);
+        let updatedValue = JSON.parse(JSON.stringify(letterValues))
         updatedValue[newCalcObj.name] = {letters:{}};
-        updatedValue[newCalcObj.name].letters = structuredClone(newCalcObj.letters)
+        updatedValue[newCalcObj.name].letters = JSON.parse(JSON.stringify(newCalcObj.letters))
         setLetterValues(updatedValue);
         setNewCalcObj(baseCalculationObj);
         setShowNewCalcInputsFlag(false);
